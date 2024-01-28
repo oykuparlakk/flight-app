@@ -1,21 +1,32 @@
-// Form.js
-
 import React, { useState } from "react";
-import { IoSearch } from "react-icons/io5";
 import CheckboxGroup from "./CheckboxGroup";
 import { MdOutlineFlightTakeoff } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { TbArrowsExchange } from "react-icons/tb";
+import InputField from "./InputField";
 
 export default function Form() {
   const [selectedOption, setSelectedOption] = useState("roundTrip");
-  const [departureValue, setDepartureValue] = useState("");
-  const [destinationValue, setDestinationValue] = useState("");
+  const [formData, setFormData] = useState({
+    departureValue: "",
+    destinationValue: "",
+    departureDateValue: "",
+    arrivalDateValue: "",
+  });
+
+  const handleInputChange = (field, value) => {
+    setFormData({
+      ...formData,
+      [field]: value,
+    });
+  };
 
   const handleExchangeClick = () => {
-    const temp = departureValue;
-    setDepartureValue(destinationValue);
-    setDestinationValue(temp);
+    setFormData({
+      ...formData,
+      departureValue: formData.destinationValue,
+      destinationValue: formData.departureValue,
+    });
   };
 
   const handleOptionChange = (value) => {
@@ -35,90 +46,50 @@ export default function Form() {
           selectedOption={selectedOption}
           onChange={handleOptionChange}
         />
-
         <div className="flex flex-row gap-4">
-          <div className="mb-4">
-            <label
-              className="block text-white text-sm font-bold mb-2"
-              htmlFor="departure"
-            >
-              Departure
-            </label>
-            <div className="relative">
-              <input
-                className="w-full px-3 py-2 border rounded-md outline-none text-black"
-                type="text"
-                id="departure"
-                placeholder="Enter City"
-                style={{ color: "black" }}
-                value={departureValue}
-                onChange={(e) => setDepartureValue(e.target.value)}
-              />
-              <MdOutlineFlightTakeoff className="absolute right-3 top-3 text-black" />
-            </div>
-          </div>
+          <InputField
+            label="Departure"
+            type="text"
+            id="departure"
+            placeholder="Enter City"
+            value={formData.departureValue}
+            onChange={(value) => handleInputChange("departureValue", value)}
+            icon={<MdOutlineFlightTakeoff />}
+          />
 
-          <div className="flex items-center justify-center mt-1 text-black font-extrabold">
+          <div className="flex items-center justify-center mt-1 text-black font-extrabold cursor-pointer">
             <TbArrowsExchange onClick={handleExchangeClick} />
           </div>
 
-          <div className="mb-4">
-            <label
-              className="block text-white text-sm font-bold mb-2"
-              htmlFor="destination"
-            >
-              Arrivals
-            </label>
-            <div className="relative">
-              <input
-                className="w-full px-3 py-2 border rounded-md outline-none text-black"
-                type="text"
-                id="destination"
-                placeholder="Destination"
-                style={{ color: "black" }}
-                value={destinationValue}
-                onChange={(e) => setDestinationValue(e.target.value)}
-              />
-              <FaLocationDot className="absolute right-3 top-3 text-black" />
-            </div>
-          </div>
+          <InputField
+            label="Arrivals"
+            type="text"
+            id="destination"
+            placeholder="Destination"
+            value={formData.destinationValue}
+            onChange={(value) => handleInputChange("destinationValue", value)}
+            icon={<FaLocationDot />}
+          />
 
-          <div className="mb-4">
-            <label
-              className="block text-white text-sm font-bold mb-2"
-              htmlFor="departureDate"
-            >
-              Departure Date
-            </label>
-            <input
-              className="w-full px-3 py-2 border rounded-md outline-none text-black"
-              type="date"
-              id="departureDate"
-            />
-          </div>
+          <InputField
+            label="Departure Date"
+            type="date"
+            id="departureDate"
+            placeholder="Departure Date"
+            value={formData.departureDateValue}
+            onChange={(value) => handleInputChange("departureDateValue", value)}
+          />
 
           {selectedOption === "roundTrip" && (
-            <div className="mb-4">
-              <label
-                className="block text-white text-sm font-bold mb-2"
-                htmlFor="arrivalDate"
-              >
-                Arrival Date
-              </label>
-              <input
-                className="w-full px-3 py-2 border rounded-md outline-none text-black"
-                type="date"
-                id="arrivalDate"
-              />
-            </div>
+            <InputField
+              type="date"
+              label="Arrival Date"
+              id="arrivalDate"
+              placeholder="Arrival Date"
+              value={formData.arrivalDateValue}
+              onChange={(value) => handleInputChange("arrivalDateValue", value)}
+            />
           )}
-        </div>
-
-        {/* Search Button */}
-        <div className="flex justify-end">
-          <button className="flex items-center bg-yellow-500 text-white px-4 py-2 rounded-md">
-            Search <IoSearch className="ml-2" />
-          </button>
         </div>
       </div>
     </section>
