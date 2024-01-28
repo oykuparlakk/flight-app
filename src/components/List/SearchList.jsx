@@ -1,39 +1,116 @@
 import React, { useContext } from "react";
 import { FlightContext } from "../../context/FlightContext";
+import "swiper/css";
+import "swiper/css/effect-flip";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { EffectFlip, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 function SearchList() {
   const { flights } = useContext(FlightContext);
 
-  console.log("flights", flights);
+  if (!flights || flights.length === 0) {
+    return <></>;
+  }
 
   return (
-    <section>
-      <h2>Flight Search Results</h2>
-      <ul>
-        {flights.map((flight) => (
-          <li key={flight.id}>
-            <table>
-              <thead>
-                <tr>
-                  <th>Flight Number</th>
-                  <th>Departure</th>
-                  <th>Destination</th>
-               
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{flight.flightNumber}</td>
-                  <td>{flight.departure}</td>
-                  <td>{flight.destination}</td>
-           
-                </tr>
-              </tbody>
-            </table>
-          </li>
-        ))}
-      </ul>
-    </section>
+    <>
+      <section className="container mx-auto h-full px-[120px] py-12">
+        <h2 className="text-3xl">Flight Search Results</h2>
+
+        <div className="grid grid-cols-4 gap-6 pt-6">
+          {flights.map((flight) => (
+            <div key={`flight-${flight.id}`}>
+              <Swiper
+                effect={"flip"}
+                grabCursor={true}
+                pagination={true}
+                modules={[EffectFlip, Pagination]}
+                className="mySwiper"
+                style={{
+                  
+                }}
+              >
+                <div>
+                  <SwiperSlide
+                    key={`flight-info-${flight.id}`}
+                    className="flex items-center justify-center bg-gray-400 rounded-2xl shadow-md"
+                  >
+                    <div className="text-black rounded-lg">
+                      <div className=" flex items-center justify-center p-5">
+                        <h3 className="text-2xl font-medium">
+                          {flight.airline}
+                        </h3>
+                      </div>
+                      <table className="w-full text-sm">
+                        <tbody>
+                          <tr>
+                            <th>Departure City</th>
+                            <td>{flight.departureCity}</td>
+                          </tr>
+                          <tr>
+                            <th>Departure Airport</th>
+                            <td>{flight.departureAirport}</td>
+                          </tr>
+                          <tr>
+                            <th>Arrival City</th>
+                            <td>{flight.arrivalCity}</td>
+                          </tr>
+                          <tr>
+                            <th>Arrival Airport</th>
+                            <td>{flight.arrivalAirport}</td>
+                          </tr>
+                          <tr>
+                            <th>Duration</th>
+                            <td>{flight.duration}</td>
+                          </tr>
+                          <tr>
+                            <th>Price</th>
+                            <td>{flight.price}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </SwiperSlide>
+
+                  <SwiperSlide
+                    key={`flight-details-${flight.id}`}
+                    className="flex items-center justify-center bg-gray-400 rounded-2xl shadow-md"
+                  >
+                    <div className="text-black rounded-lg">
+                      <div className=" flex items-center justify-center p-5">
+                        <h3 className="text-2xl font-medium">DETAILS</h3>
+                      </div>
+                      <table className="w-full text-sm">
+                        <tbody>
+                          <tr>
+                            <th>Departure Date</th>
+                            <td>{flight.departureDate}</td>
+                          </tr>
+                          <tr>
+                            <th>Departure Time</th>
+                            <td>{flight.departureTime}</td>
+                          </tr>
+                          <tr>
+                            <th>Return Date</th>
+                            <td>{flight.returnDate}</td>
+                          </tr>
+                          <tr>
+                            <th>Return Time</th>
+                            <td>{flight.returnTime}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </SwiperSlide>
+                </div>
+              </Swiper>
+            </div>
+          ))}
+        </div>
+      </section>
+    </>
   );
 }
 

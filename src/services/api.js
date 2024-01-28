@@ -1,5 +1,9 @@
 const BASE_URL = "https://65b61d50da3a3c16ab0039fd.mockapi.io/api"; // Mock API adresi
 
+const formatDate = (dateString) => {
+  const options = { year: "numeric", month: "numeric", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+};
 export const getFlights = async (filterParams) => {
   try {
     const response = await fetch(`${BASE_URL}/flights`);
@@ -18,9 +22,10 @@ export const getFlights = async (filterParams) => {
           (!filterParams.destinationValue ||
             flight.arrivalCity === filterParams.destinationValue) &&
           (!filterParams.departureDateValue ||
-            flight.departureDate === filterParams.departureDateValue) &&
+            formatDate(flight.departureDate) ===
+              filterParams.departureDateValue) &&
           (!filterParams.arrivalDateValue ||
-            flight.arrivalDate === filterParams.arrivalDateValue)
+            formatDate(flight.arrivalDate) === filterParams.arrivalDateValue)
       );
     }
 

@@ -62,7 +62,7 @@ const DropdownInputField = ({
           {value ? value : placeholder}
         </div>
         {isOpen && (
-          <div className="absolute w-full mt-1 bg-white border rounded-md shadow-lg ">
+          <div className="absolute w-full mt-1 bg-white border rounded-md shadow-lg max-h-60 overflow-y-auto z-40">
             <input
               type="text"
               placeholder={`Type to filter ${label.toLowerCase()}`}

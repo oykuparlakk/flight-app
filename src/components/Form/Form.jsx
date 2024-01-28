@@ -6,7 +6,6 @@ import FormValidator from "./FormValidator";
 import DropdownInputField from "./DropdownInputField";
 import Notification from "./Notification";
 import { FlightContext } from "../../context/FlightContext";
-
 import { getCities, getFlights } from "../../services/api";
 
 export default function Form() {
@@ -176,7 +175,7 @@ export default function Form() {
 
   return (
     <>
-      <section className="relative flex items-start mt-5 justify-center h-screen">
+      <section className="relative flex items-start mt-5 justify-center h-3/6	">
         <div className="bg-gradient-to-br from-gray-400 to-purple-400 p-8 rounded-lg shadow-md">
           <FormValidator validate={validateForm}>
             {({ validateForm, clearErrors }) => (

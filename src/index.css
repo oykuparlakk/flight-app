@@ -49,3 +49,31 @@ label {
 input::placeholder {
   color: rgb(104, 103, 103);
 }
+
+.swiper {
+  width: 250px;
+  height: 250px;
+  padding: 50px;
+}
+
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 300px;
+  height: 300px;
+}
+
+.swiper-pagination {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.swiper-pagination-bullet {
+  background-color: black !important; 
+}
+
+.swiper-pagination-bullet-active {
+  background-color: black; 
+}
