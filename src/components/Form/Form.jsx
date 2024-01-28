@@ -5,6 +5,7 @@ import InputField from "./InputField";
 import FormValidator from "./FormValidator";
 import DropdownInputField from "./DropdownInputField";
 import Notification from "./Notification";
+import Loader from "../Loader";
 import { FlightContext } from "../../context/FlightContext";
 import { getCities, getFlights } from "../../services/api";
 
@@ -19,7 +20,7 @@ export default function Form() {
   const [cities, setCities] = useState([]);
   const [autoSearch, setAutoSearch] = useState(false);
   const { updateFlights } = useContext(FlightContext);
-
+  const [loading, setLoading] = useState(false);
   const [notifications, setNotifications] = useState([]);
 
   const showNotification = (message, type) => {
@@ -104,8 +105,8 @@ export default function Form() {
     const errors = validateForm();
 
     const allFields =
-      formData.departureValue.trim() == "" &&
-      formData.destinationValue.trim() == "" &&
+      formData.departureValue.trim() === "" &&
+      formData.destinationValue.trim() === "" &&
       !formData.departureDateValue &&
       !formData.arrivalDateValue;
 
@@ -131,6 +132,8 @@ export default function Form() {
       }
 
       try {
+        setLoading(true);
+
         const flights = await getFlights({
           departureValue: formData.departureValue,
           destinationValue: formData.destinationValue,
@@ -139,6 +142,7 @@ export default function Form() {
         });
 
         updateFlights(flights);
+        setLoading(false);
         showNotification("Search results retrieved successfully.", "success");
         console.log("Search results:", flights);
       } catch (error) {
@@ -262,6 +266,8 @@ export default function Form() {
           />
         ))}
       </div>
+
+      <Loader loading={loading} />
     </>
   );
 }

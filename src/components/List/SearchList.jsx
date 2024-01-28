@@ -6,12 +6,30 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { EffectFlip, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { FaSearchLocation } from "react-icons/fa";
 
 function SearchList() {
   const { flights } = useContext(FlightContext);
 
   if (!flights || flights.length === 0) {
-    return <></>;
+    return (
+      <>
+        <section className="container mx-auto h-full flex justify-center items-center px-5 py-10 ">
+          <div className="text-center space-y-5">
+            <div className="flex justify-center items-center">
+              <FaSearchLocation className="text-5xl" />
+            </div>
+
+            <div>
+              <p className="text-lg">
+                Sorry, the flight with the features you were looking for was not
+                found. 😔
+              </p>
+            </div>
+          </div>
+        </section>
+      </>
+    );
   }
 
   return (
@@ -28,9 +46,7 @@ function SearchList() {
                 pagination={true}
                 modules={[EffectFlip, Pagination]}
                 className="mySwiper"
-                style={{
-                  
-                }}
+                style={{}}
               >
                 <div>
                   <SwiperSlide
