@@ -9,7 +9,7 @@ import Loader from "../Loader";
 import { FlightContext } from "../../context/FlightContext";
 import { getCities, getFlights } from "../../services/api";
 
-export default function Form() {
+export default function Form({ setSearchPerformed }) {
   const [selectedOption, setSelectedOption] = useState("roundTrip");
   const [formData, setFormData] = useState({
     departureValue: "",
@@ -22,6 +22,7 @@ export default function Form() {
   const { updateFlights } = useContext(FlightContext);
   const [loading, setLoading] = useState(false);
   const [notifications, setNotifications] = useState([]);
+
 
   const showNotification = (message, type) => {
     setNotifications([...notifications, { message, type }]);
@@ -142,6 +143,7 @@ export default function Form() {
         });
 
         updateFlights(flights);
+        setSearchPerformed(true);
         setLoading(false);
         showNotification("Search results retrieved successfully.", "success");
         console.log("Search results:", flights);

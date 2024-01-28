@@ -7,6 +7,7 @@ import "swiper/css/navigation";
 import { EffectFlip, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FaSearchLocation } from "react-icons/fa";
+import Filters from "./Filters";
 
 function SearchList() {
   const { flights } = useContext(FlightContext);
@@ -36,6 +37,10 @@ function SearchList() {
     <>
       <section className="container mx-auto h-full px-[120px] py-12">
         <h2 className="text-3xl">Flight Search Results</h2>
+
+        <div>
+          <Filters />
+        </div>
 
         <div className="grid grid-cols-4 gap-6 pt-6">
           {flights.map((flight) => (
