@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import CheckboxGroup from "./CheckboxGroup";
 import { MdOutlineFlightTakeoff } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
@@ -14,24 +14,33 @@ export default function Form() {
     arrivalDateValue: "",
   });
 
-  const handleInputChange = (field, value) => {
-    setFormData({
-      ...formData,
-      [field]: value,
-    });
-  };
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-  const handleExchangeClick = () => {
-    setFormData({
-      ...formData,
-      departureValue: formData.destinationValue,
-      destinationValue: formData.departureValue,
-    });
-  };
+  const handleInputChange = useCallback(
+    (field, value) => {
+      setFormData((prevData) => ({
+        ...prevData,
+        [field]: value,
+      }));
+    },
+    [setFormData]
+  );
 
-  const handleOptionChange = (value) => {
-    setSelectedOption(value);
-  };
+  const handleExchangeClick = useCallback(() => {
+    setFormData((prevData) => ({
+      ...prevData,
+      departureValue: prevData.destinationValue,
+      destinationValue: prevData.departureValue,
+    }));
+  }, [setFormData]);
+
+  const handleOptionChange = useCallback(
+    (value) => {
+      setSelectedOption(value);
+    },
+    [setSelectedOption]
+  );
 
   const tripOptions = [
     { label: "One Way", value: "oneWay" },
@@ -78,6 +87,7 @@ export default function Form() {
             placeholder="Departure Date"
             value={formData.departureDateValue}
             onChange={(value) => handleInputChange("departureDateValue", value)}
+            min={today.toISOString().split("T")[0]}
           />
 
           {selectedOption === "roundTrip" && (
@@ -88,6 +98,7 @@ export default function Form() {
               placeholder="Arrival Date"
               value={formData.arrivalDateValue}
               onChange={(value) => handleInputChange("arrivalDateValue", value)}
+              min={formData.departureDateValue}
             />
           )}
         </div>
