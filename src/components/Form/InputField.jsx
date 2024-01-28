@@ -1,4 +1,3 @@
-// InputField.js
 import React from "react";
 
 const InputField = ({
@@ -12,7 +11,7 @@ const InputField = ({
   min,
 }) => {
   return (
-    <div className="mb-4">
+    <div className="mb-4 min-w-[220px]">
       <label className="block text-white text-sm font-bold mb-2" htmlFor={id}>
         {label}
       </label>

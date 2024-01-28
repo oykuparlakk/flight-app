@@ -42,10 +42,10 @@ label {
 }
 
 .checked-label {
-  color: #3f4947;
+  color: #515b59;
   font-weight: bold;
 }
 
 input::placeholder {
-  color: #333;
+  color: rgb(104, 103, 103);
 }
